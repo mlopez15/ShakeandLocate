@@ -43,5 +43,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>To get the building GPS coordinates.</string>
+	<key>NSLocationWhenInUsageDescription</key>
+	<string>To get the building GPS coordianates. </string>
 </dict>
 </plist>
