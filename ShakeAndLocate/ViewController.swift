@@ -13,7 +13,9 @@ import CoreLocation
 
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
   
-
+    @IBOutlet weak var shakeDisplay: UILabel!
+    @IBOutlet weak var longDisplay: UILabel!
+    @IBOutlet weak var latDisplay: UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManager = CLLocationManager()
@@ -29,7 +31,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
 
         self.locationManager.startUpdatingLocation()
         
-        self.mapView.showsUserLocation = true
+        //self.mapView.showsUserLocation = true
         
     }    
     
@@ -37,7 +39,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     //Location Delegate Methods
    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
         let location = locations.last
         
@@ -45,18 +47,34 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
         
-        self.mapView.setRegion(region, animated: true)
+        //self.mapView.setRegion(region, animated: true)
+        
+        self.longDisplay.text = "\(center.longitude)"
+        
+        self.latDisplay.text = "\(center.latitude)"
         
         self.locationManager.stopUpdatingLocation()
+        
+        print(longDisplay)
+        
+        print(latDisplay)
         
     }
     
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Ya messed up" + error.localizedDescription)
     }
 
 
+    override var canBecomeFirstResponder: Bool { return true }
+    
+    func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent) {
+        if motion == .motionShake {
+            self.shakeDisplay.text = "Shaken, not stirred"
+            print("Shake registered")
+        }
+    }
     
 
     
